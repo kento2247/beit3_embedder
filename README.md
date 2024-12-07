@@ -20,7 +20,6 @@ aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/downloa
 ## finetune済みモデルをダウンロード
 aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/download/beit3/beit3_large_patch16_384_coco_retrieval.pth
 ```
-<<<<<<< HEAD
 
 ## demo
 ```sh
@@ -35,8 +34,8 @@ if __name__ == "__main__":
         model_config="data/beit3_large_patch16_384_retrieval",
     )
 
-    text = "Take a whole grain white package"
-    image_path = "/home/initial/switching_reverie_retrieval/data/REFTEXT_IMAGES/env0/6120.jpg"
+    text = "テキスト"
+    image_path = "画像パス"
 
     ## 画像と言語の特徴量を同時に取得
     image_feats, text_feats = beit3_embedder.embed_all(image_path=image_path, text=text, to_cpu=False)  # (1024), (1024)
@@ -49,5 +48,3 @@ if __name__ == "__main__":
 
     print(image_feats.shape, text_feats.shape)
 ```
-=======
->>>>>>> a2ffa6c5b5a4c0e7028270499106cd1172250982
