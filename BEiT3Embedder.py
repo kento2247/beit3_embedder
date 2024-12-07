@@ -6,13 +6,14 @@
 # --------------------------------------------------------'
 
 import os
-import beit3_utils
-import modeling_finetune
+
 import torch
 from timm.models import create_model
 from torchvision import transforms
 from torchvision.datasets.folder import default_loader
 from transformers import XLMRobertaTokenizer
+
+from . import beit3_utils, modeling_finetune
 
 
 class BEiT3Embedder:
@@ -141,28 +142,3 @@ class BEiT3Embedder:
             vision_cls = vision_cls.cpu().numpy()
 
         return vision_cls
-
-
-if __name__ == "__main__":
-    ## demoコード
-    
-    beit3_embedder = BEiT3Embedder(
-        cktp_path="data/beit3_large_patch16_384_coco_retrieval.pth",
-        tokenizer_path="data/beit3.spm",
-        model_config="data/beit3_large_patch16_384_retrieval",
-    )
-
-    text = "Take a whole grain white package"
-    image_path = "/home/initial/switching_reverie_retrieval/data/REFTEXT_IMAGES/env0/6120.jpg"
-    
-    ## 画像と言語の特徴量を同時に取得
-    image_feats, text_feats = beit3_embedder.embed_all(image_path=image_path, text=text, to_cpu=False)  # (1024), (1024)
-    
-    ## または，画像の特徴量のみ取得
-    image_feats = beit3_embedder.embed_image(image_path=image_path, to_cpu=False) # (1024)
-    
-    ## または，テキストの特徴量のみ取得
-    text_feats = beit3_embedder.embed_text(text=text, to_cpu=False) # (1024)
-
-    print(image_feats.shape, text_feats.shape)
-

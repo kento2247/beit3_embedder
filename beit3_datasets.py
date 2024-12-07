@@ -11,11 +11,7 @@ import os
 import random
 from collections import Counter, defaultdict
 
-import beit3_utils
 import torch
-import utils
-from glossary import normalize_word
-from randaug import RandomAugment
 from timm.data import create_transform
 from timm.data.constants import (
     IMAGENET_DEFAULT_MEAN,
@@ -26,6 +22,10 @@ from timm.data.constants import (
 from timm.data.transforms import RandomResizedCropAndInterpolation
 from torchvision import transforms
 from torchvision.datasets.folder import default_loader
+
+from . import beit3_utils
+from .glossary import normalize_word
+from .randaug import RandomAugment
 
 
 class BaseDataset(torch.utils.data.Dataset):
@@ -759,8 +759,8 @@ task2dataset = {
 
 def create_dataloader(dataset, is_train, batch_size, num_workers, pin_mem, dist_eval=False):
     if is_train or dist_eval:
-        num_tasks = utils.get_world_size()
-        global_rank = utils.get_rank()
+        num_tasks = beit3_utils.get_world_size()
+        global_rank = beit3_utils.get_rank()
 
         if not is_train and dist_eval and len(dataset) % num_tasks != 0:
             print(
@@ -782,7 +782,7 @@ def create_dataloader(dataset, is_train, batch_size, num_workers, pin_mem, dist_
         num_workers=num_workers,
         pin_memory=pin_mem,
         drop_last=is_train,
-        collate_fn=utils.merge_batch_tensors_by_dict_key,
+        collate_fn=beit3_utils.merge_batch_tensors_by_dict_key,
     )
 
 

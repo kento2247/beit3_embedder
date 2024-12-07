@@ -12,23 +12,23 @@ import os
 import time
 from pathlib import Path
 
-import modeling_finetune
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
-import beit3_utils
-from beit3_datasets import create_downstream_dataset
-from engine_for_finetuning import evaluate, get_handler, train_one_epoch
-from optim_factory import (
+from timm.data.mixup import Mixup
+from timm.models import create_model
+from timm.utils import ModelEma
+
+from . import beit3_utils, modeling_finetune
+from .beit3_datasets import create_downstream_dataset
+from .beit3_utils import NativeScalerWithGradNormCount as NativeScaler
+from .engine_for_finetuning import evaluate, get_handler, train_one_epoch
+from .optim_factory import (
     LayerDecayValueAssigner,
     create_optimizer,
     get_is_head_flag_for_vit,
     get_parameter_groups,
 )
-from timm.data.mixup import Mixup
-from timm.models import create_model
-from timm.utils import ModelEma
-from beit3_utils import NativeScalerWithGradNormCount as NativeScaler
 
 
 def get_args():
@@ -481,7 +481,9 @@ def main(args, ds_init):
                 result_file = os.path.join(args.output_dir, f"{args.task}_result_val_e{epoch}.json")
                 task_key = "CIDEr"
                 if beit3_utils.is_main_process():
-                    test_stats = beit3_utils.coco_caption_eval(args.output_dir, prediction_file, "{}_val".format(args.task))
+                    test_stats = beit3_utils.coco_caption_eval(
+                        args.output_dir, prediction_file, "{}_val".format(args.task)
+                    )
                     beit3_utils.write_result_to_jsonl(test_stats, result_file)
                 torch.distributed.barrier()
                 if not beit3_utils.is_main_process():

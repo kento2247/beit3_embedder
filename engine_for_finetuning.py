@@ -11,15 +11,16 @@ import os
 import sys
 from typing import Iterable, Optional
 
-import beit3_utils
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from beit3_datasets import get_sentencepiece_model_for_beit3
 from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
 from timm.utils import ModelEma, accuracy
 from tqdm import tqdm
+
+from . import beit3_utils
+from .beit3_datasets import get_sentencepiece_model_for_beit3
 
 
 class TaskHandler(object):
