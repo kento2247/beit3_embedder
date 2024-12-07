@@ -20,6 +20,7 @@ aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/downloa
 ## finetune済みモデルをダウンロード
 aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/download/beit3/beit3_large_patch16_384_coco_retrieval.pth
 ```
+<<<<<<< HEAD
 
 ## demo
 ```sh
@@ -48,3 +49,5 @@ if __name__ == "__main__":
 
     print(image_feats.shape, text_feats.shape)
 ```
+=======
+>>>>>>> a2ffa6c5b5a4c0e7028270499106cd1172250982
