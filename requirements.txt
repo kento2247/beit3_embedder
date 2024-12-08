@@ -64,7 +64,7 @@ tensorboardX==2.6.2.2
 timm==0.6.13
 tokenizers==0.20.1
 torch==2.5.1
-torchaudio==2.5.1+cu118
+torchaudio==2.5.1
 torchmetrics==1.5.1
 torchscale==0.3.0
 torchvision==0.20.1
