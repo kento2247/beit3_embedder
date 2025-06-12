@@ -6,20 +6,26 @@
 
 ## environment
 ```sh
+# pyenvを作成する場合
 pyenv install 3.10.0
 pyenv virtualenv 3.10.0 beit3
-cd /home/initial/switching_reverie_retrieval/src/unilm/beit3
 pyenv local beit3
-pip install -r requirements.txt
+```
+
+```sh
+# ライブラリのインストール
+git clone git@github.com:kento2247/beit3_embedder.git
+pip install -r beit3_embedder/requirements.txt
 ```
 
 ## download data
 ```sh
 ## tokenizerをダウンロード
-aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/download/beit3/beit3.spm
+aria2c -x10 -s10 -k1M -d beit3_embedder/data/ https://github.com/addf400/files/releases/download/beit3/beit3.spm
 ## finetune済みモデルをダウンロード
-aria2c -x10 -s10 -k1M -d data/ https://github.com/addf400/files/releases/download/beit3/beit3_large_patch16_384_coco_retrieval.pth
+aria2c -x10 -s10 -k1M -d beit3_embedder/data/ https://github.com/addf400/files/releases/download/beit3/beit3_large_patch16_384_coco_retrieval.pth
 ```
+
 
 ## demo
 ```sh
